@@ -12,41 +12,38 @@ class Location{
 description: String
 address: String
 }
-AAUOC o-- Location
-
-
+AAUOC o-- "0..*" Location
 
 class Event{
 date : Date
 description : String
 
-assign(I: Location) : void
 }
-Location -- Event
-AAUOC o-- Event
+Location "1" -- "0..*" Event : isLocatedIn
+AAUOC o-- "0..*" Event
 
 class Person{
 name : String
 }
-AAUOC o-- Person
+AAUOC o-- "0..*" Person
 
 class Member{
 e-mail : String
 }
 Person <|-- Member
-Event -- Member
+Event "0..*" -- "0..*" Member : attendsTo
 
 class Conference{
 max_attendees : Integer
 }
 Event <|-- Conference
-Person -- Conference
+Person "0..*" -- "0..*" Conference : attendsTo
 
 class BoardMeeting
 Event <|-- BoardMeeting
 
 class BoardMember
-BoardMember -- BoardMeeting
+BoardMember "0..*" -- "0..*" BoardMeeting : attendsTo
 Member <|-- BoardMember
 
 @enduml
